@@ -10564,8 +10564,8 @@ class TTT:
         self.svkcost = svkcost
         self.yourcost = peaqcost
 
-        #print("peaqcost", round(peaqcost,1), "kr", round(sum([v for k,v in self.total_hourly_model.items() if k in self.svk_hourly_pattern_kwh]),0),"kWh")
-        #print("svkcost", round(svkcost,1), "kr", round(sum([v for k,v in self.svk_hourly_pattern_kwh.items()]),0),"kWh")
+        print("peaqcost", round(peaqcost,1), "kr", round(sum([v for k,v in self.total_hourly_model.items() if k in self.svk_hourly_pattern_kwh]),0),"kWh")
+        print("svkcost", round(svkcost,1), "kr", round(sum([v for k,v in self.svk_hourly_pattern_kwh.items()]),0),"kWh")
         # for k,v in self.total_hourly_model.items():
         #     print(k, ";", round(v,1), ";", round(self.svk_hourly_pattern_kwh.get(k,0),2), ";", round(hour_prices.get(k,0),2))
 
@@ -10643,6 +10643,8 @@ class TTT:
 
 t = TTT()
 t.update()
+print(t.yourcost)
+print(t.svkcost)
 
 
 # import matplotlib.pyplot as plt

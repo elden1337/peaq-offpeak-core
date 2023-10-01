@@ -5,7 +5,7 @@ setuptools.setup(
     version="2.0.3",
     author="Magnus Eldén",
     description="Wrapper for the Compare It Homeline Api",
-    packages=["Compare_It"],
+    packages=["peaqoffpeak, peaqoffpeak.models"],
     install_requires=[
           'requests',
       ],

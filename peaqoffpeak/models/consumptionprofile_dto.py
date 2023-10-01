@@ -23,15 +23,3 @@ class ConsumptionProfileDTO:
             Period = data.get('Period')
         )
     
-
-@dataclass
-class ConsumptionProfileModel:
-    Period: datetime
-    Value: int
-
-    @classmethod
-    def from_dto(cls, dto:ConsumptionProfileDTO):
-        return cls(
-            Period = datetime.strptime(dto.Period, "%Y-%m-%dT%H:%M:%S"),
-            Value = dto.LPValue
-        )
