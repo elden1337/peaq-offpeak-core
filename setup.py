@@ -1,10 +1,10 @@
 import setuptools
 
 setuptools.setup(
-    name="homeline",
-    version="2.0.3",
+    name="peaqoffpeak",
+    version="0.1.0",
     author="Magnus Eldén",
-    description="Wrapper for the Compare It Homeline Api",
+    description="Partial wrapper for Svk Mimer Api",
     packages=["peaqoffpeak, peaqoffpeak.models"],
     install_requires=[
           'requests',

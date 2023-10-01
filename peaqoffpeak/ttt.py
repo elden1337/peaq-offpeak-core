@@ -10541,6 +10541,8 @@ class TTT:
         self.svk_hourly_pattern_kwh:dict = {}
         self._svkcost: float = 0
         self._yourcost: float = 0
+        self.start_day = 1
+        self.end_day = datetime.now().day
 
     def update(self):
         self.total_hourly_model = self.combine_and_sort_dictionaries( #todo: support multiple or single resultsensors
@@ -10589,8 +10591,8 @@ class TTT:
     def convert_to_dict(json_str):
         result = {}
         for item in json_str:
-            dt = datetime.strptime(item['isodate'], '%Y-%m-%d %H:%M:%S').replace(second=0, minute=0, microsecond=0)
-            dt -= timedelta(hours=1)
+            dt = datetime.strptime(item['isodate'], '%Y-%m-%d %H:%M:%S').replace(second=0, minute=0, microsecond=0)            
+            dt -= timedelta(hours=1) #needed to handle input from ha-db. must be fixed elsewhere
             result[dt] = item['state']
         return result
 
@@ -10615,10 +10617,9 @@ class TTT:
         return ret
 
     """Calculate the daily percentage of the total draw, hourly"""
-    @staticmethod
-    def calculate_draw_percentage_hourly(input) -> dict:
+    def calculate_draw_percentage_hourly(self, input) -> dict:
         ret: dict = {}
-        for d in range(1, datetime.now().day):
+        for d in range(self.start_day, self.end_day):
             daily_draw = sum([abs(cons) for dt, cons in input.items() if dt.day == d])
             for dt, cons in input.items():
                 if dt.day == d:
@@ -10626,10 +10627,9 @@ class TTT:
         return ret
 
     """Map the daily consumption onto the svk-pattern"""
-    @staticmethod
-    def total_daily_consumption(input) -> dict:
+    def total_daily_consumption(self, input) -> dict:
         ret: dict = {}
-        for d in range(1, datetime.now().day):
+        for d in range(self.start_day, self.end_day):
             ret[d] = sum([abs(cons) for dt, cons in input.items() if dt.day == d])
         return ret
 
@@ -10642,6 +10642,7 @@ class TTT:
 
 
 t = TTT()
+t.end_day = 28
 t.update()
 print(t.yourcost)
 print(t.svkcost)
